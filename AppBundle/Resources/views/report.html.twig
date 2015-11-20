@@ -1,0 +1,85 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+    {% block sidebar %}
+    {{ parent() }}
+                <ul class="menu">
+                    <li>
+                        <a href="#">
+                            <div class="menuColSelect">
+                                <span class="glyphicon glyphicon-book"></span> Report
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="operatori">
+                            <div class="menuCol">
+                                <span class="glyphicon glyphicon-user"></span> Operatori
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            {% endblock %}
+                {% block logout %}
+                {% endblock %}
+            {% block content %}
+            </div>
+            <div class="col-md-10 content">
+                <h1>Report</h1>
+                <div class="tableHeadContainer">
+                <table class="table table-bordered tableReportAdminHead">
+                    <thead>
+                        <tr>
+                            <th>Campagna<button class="btn btn-default btn-xs filterButton" id="campaignReport"><span class="glyphicon glyphicon-filter"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
+                            <th>Operatore<button class="btn btn-default btn-xs filterButton" id="operatorReport"><span class="glyphicon glyphicon-filter"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
+                            <th>Nome cognome</th>
+                            <th>E-mail</th>
+                            <th>Data - Ora<button class="btn btn-default btn-xs filterButton" id="dateReport"><span class="glyphicon glyphicon-calendar"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
+                            <th>Risposta<button class="btn btn-default btn-xs filterButton" id="replyReport"><span class="glyphicon glyphicon-filter"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
+                        </tr>
+                    </thead>
+            </table>
+                </div>  
+                <div class="tableReportAdminContainer">
+                    <table class="table table-bordered table-hover tableReportAdmin">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="text" placeholder="Cerca"/><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span></button>
+                <div id="showedContacts">
+                    Contatti visualizzati: 100
+                </div>
+                <button type="button" class="btn btn-default exportButton"><span class="glyphicon glyphicon-download-alt"></span> Esporta</button>
+            </div>      
+        </div>
+    </div>
+    <!-- Selettori filtri popover -->
+    <div class="invisible" id="campaignFilter">
+        <form>
+            <input type="checkbox" checked /><span> Asus</span><br/>
+            <input type="checkbox" checked /><span> Corsair</span><br/>
+            <input type="checkbox" checked /><span> Dell</span><br/>
+        </form>
+    </div>
+    <div class="invisible" id="operatorFilter">
+        <form>
+            <input type="checkbox" checked /><span> operatore 1</span><br/>
+            <input type="checkbox" checked /><span> operatore 2</span><br/>
+            <input type="checkbox" checked /><span> operatore 3</span><br/>
+        </form>
+    </div>
+    <div class="invisible" id="replyFilter">
+        <form>
+            <input type="checkbox" checked /><span> Positiva</span><br/>
+            <input type="checkbox" checked /><span> Negativa</span><br/>
+            <input type="checkbox" checked /><span> Da richiamare</span><br/>
+            <input type="checkbox" checked /><span> Non chiamato</span><br/>
+        </form>
+    </div>
+    {% endblock %}
+    {% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript" src="js/calendario.js"></script>
+    <script type="text/javascript" src="js/filtri.js"></script>
+    <script type="text/javascript" src="js/faker.js"></script>
+    {% endblock %}

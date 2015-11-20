@@ -1,0 +1,126 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block sidebar %}
+{{ parent() }}
+                <ul class="menu">
+                    <li>
+                        <a href="#">
+                            <div class="menuColSelect">
+                                <span class="glyphicon glyphicon-book"></span> Campagne
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+        {% endblock %}
+        {% block content %}
+                </div>
+            <div class="col-md-10 content">
+                <h1>Campagne</h1>
+                <div class="tableHeadContainer">
+                    <table class="table table-bordered tableCampaignOperatorHead">
+                        <tr>
+                            <th>Campagna</th>
+                            <th>Effettuate</th>
+                            <th>Da richiamare</th>
+                            <th>Non effettuate</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tableCampaignOperatorContainer">
+                    <table class="table table-bordered table-hover tableCampaignOperator">
+                        <tr>
+                            <td>
+                                <a role="button" class="btn btn-default btn-xs" href="contatti">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </a> Acer
+                            </td>
+                            <td>76</td>
+                            <td>13</td>
+                            <td>85</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Apple
+                            </td>
+                            <td>36</td>
+                            <td>11</td>
+                            <td>66</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Asus
+                            </td>
+                            <td>48</td>
+                            <td>8</td>
+                            <td>74</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Benq
+                            </td>
+                            <td>52</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Cooler Master
+                            </td>
+                            <td>96</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Corsair
+                            </td>
+                            <td>152</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Dell
+                            </td>
+                            <td>66</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Enermax
+                            </td>
+                            <td>54</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </button> Western Digital
+                            </td>
+                            <td>85</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% block css %}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <link href="/bundles/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"  href="/bundles/css/style.css" />
+    {% endblock %}
+    <title>
+        {% block title %}RecallCRM {% endblock %} - RecallCRM
+    </title>
+</head>
+<body>
+    <img src="/bundles/img/logo.png" alt="logo" class="logo"> 
+    {% block sidebar %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <h3 class="nameHead">RecallCRM</h3>
+                <div class="dateContainerSidebar">
+                    <h4>operatore 1</h4>
+                    <h5 id="data"></h5>
+                    <h5 id="ora"></h5>
+                </div>
+            {% endblock %}
+                {% block logout %}
+                <a role="button" href="login" class="btn btn-default logout"><p>Logout</p><span class="glyphicon glyphicon-log-out"></span></a>
+                {% endblock %}
+            {% block content %}
+            {% endblock %}
+    {% block javascript %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script type="text/javascript" src="/bundles/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bundles/js/data.js"></script>
+    {% endblock %}
+</body>
+</html>

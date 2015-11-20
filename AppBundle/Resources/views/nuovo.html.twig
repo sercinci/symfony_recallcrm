@@ -1,0 +1,70 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+    {% block sidebar %}
+    {{ parent() }}
+                <ul class="menu">
+                    <li>
+                        <a href="report">
+                            <div class="menuCol">
+                                <span class="glyphicon glyphicon-book"></span> Report
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="operatori">
+                            <div class="menuCol">
+                                <span class="glyphicon glyphicon-user"></span> Operatori
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="menuColSelect">
+                                <span class="glyphicon glyphicon-plus-sign"></span> Nuovo operatore
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            {% endblock %}
+                {% block logout %}
+                {% endblock %}
+            {% block content %}
+            </div>
+            <div class="col-md-10 content">
+                <h1>Nuovo operatore</h1>
+                <div class="modifyOperatorContainer">
+                    <form method="POST" action="#" class="form-horizontal">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label for="email">E-mail</label>
+                                    <input type="email" name="email" id="email" value="" />
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password" value="" />
+                                </td>
+                                <td>
+                                    <label for="name">Nome</label>
+                                    <input type="text" name="name" id="name" value="" />
+                                    <label for="surname">Cognome</label>
+                                    <input type="text" name="surname" id="surname" value="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                    Attivo <input class="inLine" type="radio" name="status" id="active" checked/>
+                                    Inattivo <input class="inLine" type="radio" name="status" id="inactive" />
+                                    </div>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <a role="button" class="btn btn-default saveButton" href="operatori"><span class="glyphicon glyphicon-ok"></span> Salva</a>
+                    </form>
+                </div>
+            </div>      
+        </div>
+    </div>
+    {% endblock %}
