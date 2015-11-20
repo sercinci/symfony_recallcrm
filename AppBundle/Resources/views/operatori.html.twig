@@ -4,15 +4,15 @@
     {{ parent() }}
                 <ul class="menu">
                     <li>
-                        <a href="#">
-                            <div class="menuColSelect">
+                        <a href="report">
+                            <div class="menuCol">
                                 <span class="glyphicon glyphicon-book"></span> Report
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="operatori">
-                            <div class="menuCol">
+                        <a href="#">
+                            <div class="menuColSelect">
                                 <span class="glyphicon glyphicon-user"></span> Operatori
                             </div>
                         </a>
@@ -24,62 +24,76 @@
             {% block content %}
             </div>
             <div class="col-md-10 content">
-                <h1>Report</h1>
+                <h1>Operatori</h1>
                 <div class="tableHeadContainer">
-                <table class="table table-bordered tableReportAdminHead">
+                <table class="table table-bordered tableOperatorAdminHead">
                     <thead>
                         <tr>
-                            <th>Campagna<button class="btn btn-default btn-xs filterButton" id="campaignReport"><span class="glyphicon glyphicon-filter"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
-                            <th>Operatore<button class="btn btn-default btn-xs filterButton" id="operatorReport"><span class="glyphicon glyphicon-filter"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
-                            <th>Nome cognome</th>
+                            <th>Status</th>
+                            <th>Operatori</th>
                             <th>E-mail</th>
-                            <th>Data - Ora<button class="btn btn-default btn-xs filterButton" id="dateReport"><span class="glyphicon glyphicon-calendar"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
-                            <th>Risposta<button class="btn btn-default btn-xs filterButton" id="replyReport"><span class="glyphicon glyphicon-filter"></span></button><button class="btn btn-default btn-xs filterButton"><span class="glyphicon glyphicon-sort"></span></button></th>
+                            <th>Chiamate (effettuate / totali)</th>
+                            <th></th>
                         </tr>
                     </thead>
-            </table>
+                </table>
                 </div>  
-                <div class="tableReportAdminContainer">
-                    <table class="table table-bordered table-hover tableReportAdmin">
+                <div class="tableOperatorAdminContainer">
+                    <table class="table table-bordered tableOperatorAdmin table-hover">
                         <tbody>
+                            <tr>
+                                <td>Attivo</td>
+                                <td>operatore 1</td>
+                                <td>operatore1@email.it</td>
+                                <td>88 / 167</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Attivo</td>
+                                <td>operatore 2</td>
+                                <td>operatore2@email.it</td>
+                                <td>115 / 167</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Attivo</td>
+                                <td>operatore 3</td>
+                                <td>operatore3@email.it</td>
+                                <td>122 / 168</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Inattivo</td>
+                                <td>operatore 4</td>
+                                <td>operatore4@email.it</td>
+                                <td>0 / 0</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Inattivo</td>
+                                <td>operatore 5</td>
+                                <td>operatore5@email.it</td>
+                                <td>0 / 0</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Inattivo</td>
+                                <td>operatore 6</td>
+                                <td>operatore6@email.it</td>
+                                <td>0 / 0</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="nuovo"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <input type="text" placeholder="Cerca"/><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span></button>
-                <div id="showedContacts">
-                    Contatti visualizzati: 100
-                </div>
-                <button type="button" class="btn btn-default exportButton"><span class="glyphicon glyphicon-download-alt"></span> Esporta</button>
             </div>      
         </div>
     </div>
-    <!-- Selettori filtri popover -->
-    <div class="invisible" id="campaignFilter">
-        <form>
-            <input type="checkbox" checked /><span> Asus</span><br/>
-            <input type="checkbox" checked /><span> Corsair</span><br/>
-            <input type="checkbox" checked /><span> Dell</span><br/>
-        </form>
-    </div>
-    <div class="invisible" id="operatorFilter">
-        <form>
-            <input type="checkbox" checked /><span> operatore 1</span><br/>
-            <input type="checkbox" checked /><span> operatore 2</span><br/>
-            <input type="checkbox" checked /><span> operatore 3</span><br/>
-        </form>
-    </div>
-    <div class="invisible" id="replyFilter">
-        <form>
-            <input type="checkbox" checked /><span> Positiva</span><br/>
-            <input type="checkbox" checked /><span> Negativa</span><br/>
-            <input type="checkbox" checked /><span> Da richiamare</span><br/>
-            <input type="checkbox" checked /><span> Non chiamato</span><br/>
-        </form>
-    </div>
-    {% endblock %}
-    {% block javascript %}
-    {{ parent() }}
-    <script type="text/javascript" src="js/calendario.js"></script>
-    <script type="text/javascript" src="js/filtri.js"></script>
-    <script type="text/javascript" src="js/faker.js"></script>
     {% endblock %}
