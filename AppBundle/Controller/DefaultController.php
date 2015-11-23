@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\ClassLoader;
 
 class DefaultController extends Controller
 {
@@ -71,7 +72,15 @@ class DefaultController extends Controller
      */
     public function modificaAction(Request $request)
     {
-        return $this->render('AppBundle::modifica.html.twig');
+        $form = $this->createFormBuilder()
+            ->add('Email', 'email', ['label' => 'E-mail'])
+            ->add('Nome', 'text', ['label' => 'Nome'])
+            ->add('Password', 'password', ['label' => 'Password'])
+            ->add('Cognome', 'text', ['label' => 'Cognome'])
+            ->add('Status', 'choice', ['choices'=>[ 'attivo' => 'Attivo', 'inattivo' => 'Inattivo' ], 'multiple' => false, 'expanded' => true, 'required'=> true, ])
+            ->add('Salva', 'submit', ['label'=> 'Salva'])
+            ->getForm();
+        return $this->render('AppBundle::modifica.html.twig', array( 'form' => $form->createView(), ));
     }
 
     /**
@@ -79,6 +88,14 @@ class DefaultController extends Controller
      */
     public function nuovoAction(Request $request)
     {
-        return $this->render('AppBundle::nuovo.html.twig');
+        $form = $this->createFormBuilder()
+            ->add('Email', 'email', ['label' => 'E-mail'])
+            ->add('Nome', 'text', ['label' => 'Nome'])
+            ->add('Password', 'password', ['label' => 'Password'])
+            ->add('Cognome', 'text', ['label' => 'Cognome'])
+            ->add('Status', 'choice', ['choices'=>[ 'attivo' => 'Attivo', 'inattivo' => 'Inattivo' ], 'multiple' => false, 'expanded' => true, 'required'=> true, ]) 
+            ->add('Salva', 'submit', ['label'=> 'Salva'])
+            ->getForm();
+        return $this->render('AppBundle::nuovo.html.twig', array( 'form' => $form->createView(), ));
     }
 }
