@@ -1,31 +1,28 @@
 {% extends "AppBundle::layout.html.twig" %}
 
-      {% block sidebar %}
+    {% block sidebar %}
         {{ parent() }}
         <ul class="menu">
-          <li>
-            <a href="campagne">
-              <div class="menuCol">
-                <span class="glyphicon glyphicon-book"></span> Campagne
-              </div>
-            </a>
-          </li>
-        <li>
-                        <a href="#">
-                            <div class="menuColSelect">
-                                <span class="glyphicon glyphicon-th-list"></span> Acer
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-      {% endblock %}
-      {% block logout %}
-        {{ parent() }}
-      {% endblock %}
-      {% block content %}
-    </div>
+            <li>
+                <a href="/campagne">
+                    <div class="menuCol">
+                        <span class="glyphicon glyphicon-book"></span> Campagne
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/contatti/{{ campaign }}">
+                    <div class="menuColSelect">
+                        <span class="glyphicon glyphicon-th-list"></span> {{ campaign }}
+                    </div>
+               </a>
+           </li>
+        </ul>
+        {% endblock %}
+        {% block content %}
+            </div>
             <div class="col-md-10 content">
-                <h1>Acer</h1>
+                <h1>{{ campaign }}</h1>
                 <div class="tableHeadContainer">
                     <table class="table table-bordered tableContactsOperatorHead">
                         <th>Nome cognome</th>
@@ -35,49 +32,17 @@
                 </div>
                 <div class="tableContactsOperatorContainer">
                     <table class="table table-bordered table-hover tableContactsOperator">
+                        {% for chiamata in report %}
                         <tr>
                             <td>
-                                <a role="button" class="btn btn-default btn-xs" href="feedback">
-                                <span class="glyphicon glyphicon-earphone"></span></a> Luca Rossi
+                                <a role="button" class="btn btn-default btn-xs" href="/feedback/{{ chiamata.getId() }}">
+                                <span class="glyphicon glyphicon-earphone"></span></a> {{ chiamata.getName() }}
                             </td>
-                            <td>+27 548 65 45 8654</td>
-                            <td><span class="glyphicon glyphicon-record toRecall"></span> Da richiamare - 15/11/2015 - 12:05</td>
+                            <td>{{ chiamata.getPhone() }}</td>
+                            <td><span class="glyphicon glyphicon-record {% if chiamata.getReply() == 'Positivo' %}positive{% elseif chiamata.getReply() == 'Negativo' %}negative{% elseif chiamata.getReply() == 'Da richiamare'%}toRecall{% endif %}"></span> {{ chiamata.getReply() }} <strong>{% if chiamata.getReply() == 'Da richiamare' %}{{ chiamata.getDateTime()|date('d/m/Y - H:i') }}{% endif %}</strong>
                         </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-earphone"></span></button> Nicola Verdi
-                            </td>
-                            <td>+27 568 45 95 3267</td>
-                            <td><span class="glyphicon glyphicon-record toRecall"></span> Da richiamare - 16/11/2015 - 15:00</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-earphone"></span></button> Emma Gialla
-                            </td>
-                            <td>+27 458 54 65 9823</td>
-                            <td><span class="glyphicon glyphicon-record "></span> Non chiamato</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-earphone"></span></button> Marco Giordani
-                            </td>
-                            <td>+27 896 54 25 3629</td>
-                            <td><span class="glyphicon glyphicon-record "></span> Non chiamato</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-earphone"></span></button> Rita Galvani
-                            </td>
-                            <td>+27 587 58 63 2548</td>
-                            <td><span class="glyphicon glyphicon-record "></span> Non chiamato</td>
-                        </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-{% endblock %}
-{% block javascript %}
-{{ parent() }}
-    <script type="text/javascript" src="/bundles/js/faker.js"></script>
-{% endblock %}
+            {% endblock %}

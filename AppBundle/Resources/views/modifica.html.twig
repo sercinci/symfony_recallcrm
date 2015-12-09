@@ -4,30 +4,28 @@
     {{ parent() }}
                 <ul class="menu">
                     <li>
-                        <a href="report">
+                        <a href="/report">
                             <div class="menuCol">
                                 <span class="glyphicon glyphicon-book"></span> Report
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="operatori">
+                        <a href="/operatori">
                             <div class="menuCol">
                                 <span class="glyphicon glyphicon-user"></span> Operatori
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="/modifica/{{ operatore.getId() }}">
                             <div class="menuColSelect">
-                                <span class="glyphicon glyphicon-pencil"></span> operatore 1
+                                <span class="glyphicon glyphicon-pencil"></span> {{ operatore.getLastname() }}
                             </div>
                         </a>
                     </li>
                 </ul>
             {% endblock %}
-                {% block logout %}
-                {% endblock %}
             {% block content %}
             </div>
             <div class="col-md-10 content">
@@ -35,36 +33,28 @@
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content alert">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4>Eliminare operatore 1?</h4>
+                            <h4>Eliminare {{ operatore.getFirstname() }} {{ operatore.getLastname() }}?</h4>
                             {{ form_start(form) }}
-                            <a role="button" class="btn btn-default deleteButton" href="operatori"><span class="glyphicon glyphicon-trash"></span> Elimina</a>
+                            {{ form_widget(form.remove, {'attr': {'class': 'btn btn-default deleteButton'}}) }}
                         </div>  
                     </div>
                 </div>
-                <h1>Modifica operatore 1</h1>
+                <h1>Modifica {{ operatore.getFirstname() }} {{ operatore.getLastname() }}</h1>
                 <div class="modifyOperatorContainer">
-                    <form method="POST" action="#" class="form-horizontal">
+                    <form method="POST" class="form-horizontal">
                         <table>
                             <tr>
                                 <td>
-                                    {{ form_label(form.Email)}}
-                                    {{ form_widget(form.Email)}}
-                                    {{ form_label(form.Password)}}
-                                    {{ form_widget(form.Password)}}
-                                    <!--<label for="email">E-mail</label>
-                                    <input type="email" name="email" id="email" value="operatore1@email.it" />-->
-                                    <!--<label for="password">Password</label>
-                                    <input type="password" name="password" id="password" value="blublublu" />-->
+                                    {{ form_label(form.email) }}
+                                    {{ form_widget(form.email) }}
+                                    {{ form_label(form.plainPassword) }}
+                                    {{ form_widget(form.plainPassword) }}
                                 </td>
                                 <td>
-                                    {{ form_label(form.Nome)}}
-                                    {{ form_widget(form.Nome)}}
-                                    {{ form_label(form.Cognome)}}
-                                    {{ form_widget(form.Cognome)}}
-                                    <!--<label for="name">Nome</label>
-                                    <input type="text" name="name" id="name" value="Brio" />
-                                    <label for="surname">Cognome</label>
-                                    <input type="text" name="surname" id="surname" value="Blu" />-->
+                                    {{ form_label(form.firstname) }}
+                                    {{ form_widget(form.firstname) }}
+                                    {{ form_label(form.lastname) }}
+                                    {{ form_widget(form.lastname) }}
                                 </td>
                             </tr>
                             <tr>
@@ -73,17 +63,14 @@
                                 </td>
                                 <td>
                                     <div>
-                                    {{ form_widget(form.Status)}}
-                                    <!--Attivo <input class="inLine" type="radio" name="status" id="active" checked/>
-                                    Inattivo <input class="inLine" type="radio" name="status" id="inactive" />-->
+                                    {{ form_widget(form.status) }}
                                     </div>
                                 </td>
                             </tr>
                         </table>
-                        {{ form_widget(form.Salva, {'attr': {'class': 'btn btn-default saveButton'}})}}
-                        <!--<a role="button" class="btn btn-default saveButton" href="operatori"><span class="glyphicon glyphicon-ok"></span> Salva</a>-->
+                        {{ form_widget(form.save, {'attr': {'class': 'btn btn-default saveButton'}}) }}
                     </form>
-                    {{ form_end(form)}}
+                    {{ form_end(form) }}
                 </div>
             </div>      
         </div>

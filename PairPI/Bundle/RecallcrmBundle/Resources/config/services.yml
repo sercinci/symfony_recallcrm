@@ -1,0 +1,4 @@
+services:
+#    pair_pi_recallcrm.example:
+#        class: PairPI\Bundle\RecallcrmBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

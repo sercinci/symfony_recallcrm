@@ -1,123 +1,114 @@
 {% extends "AppBundle::layout.html.twig" %}
 
-
     {% block sidebar %}
-        {{ parent() }}
+    {{ parent() }}
         <ul class="menu">
-          <li>
-            <a href="campagne">
-              <div class="menuCol">
-                <span class="glyphicon glyphicon-book"></span> Campagne
-              </div>
-            </a>
-          </li>
-                    <li>
-                        <a href="contatti">
-                            <div class="menuCol">
-                                <span class="glyphicon glyphicon-th-list"></span> Acer
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="menuColSelect">
-                                <span class="glyphicon glyphicon-earphone"></span> Rossi Luca
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-    {% endblock %}
-      {% block logout %}
-        {{ parent() }}
-      {% endblock %}
-{% block content %}
+            <li>
+                <a href="/campagne">
+                    <div class="menuCol">
+                        <span class="glyphicon glyphicon-book"></span> Campagne
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/contatti/{{ report.getCampaign() }}">
+                    <div class="menuCol">
+                        <span class="glyphicon glyphicon-th-list"></span> {{report.getCampaign() }}
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/feedback/{{ report.getId() }}">
+                    <div class="menuColSelect">
+                       <span class="glyphicon glyphicon-earphone"></span> {{ report.getName() }}
+                    </div>
+                </a>
+            </li>
+        </ul>
+        {% endblock %}
+        {% block content %}
             </div>
             <div class="col-md-7 content">
-                <h1>Acer</h1>
-                      <div class="containerFeedbackTable">
-                        <table class="table table-bordered tableFeedback">
-                            <tr>
-                                <th>Telefono:</th>
-                                <th>945789345</th>
-                            </tr>
-                            <tr>
-                                <td>Nome cognome:</td>
-                                <td>Luca Rossi</td>
-                            </tr>
-                            <tr>
-                                <td>Email: </td>
-                                <td>luca.rossi@libero.it</td>
-                            </tr>
-                            <tr>
-                                <td>Status:</td>
-                                <td><span class="glyphicon glyphicon-record toRecall"></span> Da richiamare</td>
-                            </tr>
-                            <tr>
-                                <td>Chiamate effettuate:</td>
-                                <td>
-                                    <select id="dateCallSelector">
-                                        <option selected="selected">---</option>
-                                        <option value="1">02/10/2015 - 12:34</option>
-                                        <option value="2">26/09/2015 - 09:28</option>
-                                        <option value="3">15/09/2015 - 16:45</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <h1>{{ report.getCampaign() }} - {{ report.getName() }}</h1>
+                <div class="containerFeedbackTable">
+                    <table class="table table-bordered tableFeedback">
+                        <tr>
+                            <th>Telefono:</th>
+                            <th>{{ report.getPhone() }}</th>
+                        </tr>
+                        <tr>
+                            <td>Nome cognome:</td>
+                            <td>{{ report.getName() }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email: </td>
+                            <td>{{ report.getEmail() }}</td>
+                        </tr>
+                        <tr>
+                            <td>Status:</td>
+                            <td><span class="glyphicon glyphicon-record {% if report.getReply() == 'Positivo' %}positive{% elseif report.getReply() == 'Negativo' %}negative{% elseif report.getReply() == 'Da richiamare'%}toRecall{% endif %}"></span> {{ report.getReply() }}
+                            {% if report.getReply() == 'Da richiamare'%}
+                            {{ report.getDateTime()|date('d/m/Y - H:i') }}
+                            {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Chiamate effettuate:</td>
+                            <td>
+                                <select id="dateCallSelector">
+                                    <option selected="selected">---</option>
+                                    <option value="1">02/10/2015 - 12:34</option>
+                                    <option value="2">26/09/2015 - 09:28</option>
+                                    <option value="3">15/09/2015 - 16:45</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="feedbackNote">
-                    <label for="textNote">Note:</label><br/>
-                    <textarea name="textNote" form="replyFeedback" cols="77" rows="7"></textarea>
+                    {{ form_start(form) }}
+                    <label for="note">Note:</label><br/>
+                    {{ form_widget(form.note) }}
                 </div>
             </div>
             <div class="col-md-3 content">
                 <div class="replyFeedbackContainer">
                     <legend>Feedback chiamata:</legend>
-                    <form id="replyFeedback" method="POST" action="#">
+                    <form id="replyFeedback" method="POST">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div role="tab" id="headingOne">
-                                    <a class="btn btn-default replyButton" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span class="glyphicon glyphicon-record positiv"></span> Positiva
+                                    <a class="btn btn-default replyButton" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span class="glyphicon glyphicon-record positive"></span> Positiva
                                     </a>
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                     <div class="panel-body">
-
-                  {{ form_start(form) }}
-                  <div class="contenitore-subject">
-                    {{ form_widget(form.Positivo)}}
-                                        {{ form_widget(form.Altro)}}
-
-                  </div>
-
-                                    <!--    <form>
-                                            <input type="radio" name="positiv" value="interessato" /> Interessato<br/>
-                                            <input type="radio" name="positiv" value="altro" /> Altro <input type="text" />
-                                        </form>-->
+                                        <div class="contenitore-subject">
+                                            {{ form_widget(form.comment.children[0]) }}
+                                            {{ form_label(form.comment.children[0]) }}<br/>
+                                            {{ form_widget(form.comment.children[1]) }}
+                                            {{ form_label(form.comment.children[1]) }}
+                                            {{ form_widget(form.positiveComment) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div role="tab" id="headingTwo">
-                                    <a class="collapsed btn btn-default replyButton" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><span class="glyphicon glyphicon-record negativ"></span> Negativa
+                                    <a class="collapsed btn btn-default replyButton" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><span class="glyphicon glyphicon-record negative"></span> Negativa
                                     </a>
                                 </div>
                                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                     <div class="panel-body">
-
-                    <div class="contenitore-subject">
-
-                      {{ form_widget(form.Negativo)}}
-                    </div>
-
-                    {{ form_widget(form.Altro)}}
-
-
-                                    <!--    <form>
-                                            <input type="radio" name="negativ" value="nonInteressato" /> Non interessato<br/>
-                                            <input type="radio" name="negativ" value="nonRichiamare" /> Non richiamare<br/>
-                                            <input type="radio" name="negativ" value="nonAltro" /> Altro <input type="text" />
-                                        </form>-->
+                                        <div class="contenitore-subject">
+                                            {{ form_widget(form.comment.children[2]) }}
+                                            {{ form_label(form.comment.children[2]) }}<br/>
+                                            {{ form_widget(form.comment.children[3]) }}
+                                            {{ form_label(form.comment.children[3]) }}<br/>
+                                            {{ form_widget(form.comment.children[4]) }}
+                                            {{ form_label(form.comment.children[4]) }}
+                                            {{ form_widget(form.negativeComment) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -129,21 +120,21 @@
                                 </div>
                                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                     <div class="panel-body">
-                                        <input id="recallDate" type="text" name="dateCall" value="" /><span class="glyphicon glyphicon-calendar"></span>
+                                        {{ form_widget(form.comment.children[5]) }}
+                                        {{ form_label(form.comment.children[5]) }} <span class="glyphicon glyphicon-calendar"></span><br/>
+                                        {{ form_widget(form.dateTime, {'attr': {'name': 'dateTime'}}) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <a role="button" href="contatti" class="btn btn-default saveFeedbackButton"><span class="glyphicon glyphicon-ok"></span> {{ form_widget(form.send)}}</a>
+                        {{ form_widget(form.save, {'attr': {'class': 'btn btn-default saveFeedbackButton'}}) }}
                     </form>
-                    {{ form_end(form)}}
+                    {{ form_end(form) }}
                 </div>
             </div>
-        </div>
-    </div>
-{% endblock %}
-{% block javascript %}
-{{ parent() }}
-    <script type="text/javascript" src="/bundles/js/calendario.js"></script>
-    <script type="text/javascript" src="/bundles/js/selettore.js"></script>
-{% endblock %}
+        {% endblock %}
+        {% block javascript %}
+        {{ parent() }}
+            <script type="text/javascript" src="/bundles/js/calendario.js"></script>
+            <script type="text/javascript" src="/bundles/js/selettore.js"></script>
+        {% endblock %}

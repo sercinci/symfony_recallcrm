@@ -4,7 +4,7 @@
     {{ parent() }}
                 <ul class="menu">
                     <li>
-                        <a href="#">
+                        <a href="report">
                             <div class="menuColSelect">
                                 <span class="glyphicon glyphicon-book"></span> Report
                             </div>
@@ -19,8 +19,6 @@
                     </li>
                 </ul>
             {% endblock %}
-                {% block logout %}
-                {% endblock %}
             {% block content %}
             </div>
             <div class="col-md-10 content">
@@ -42,12 +40,22 @@
                 <div class="tableReportAdminContainer">
                     <table class="table table-bordered table-hover tableReportAdmin">
                         <tbody>
+                        {% for chiamata in report %}
+                            <tr>
+                                <td>{{ chiamata.getCampaign() }}</td>
+                                <td>{{ chiamata.getOperator().getFirstname() }} {{ chiamata.getOperator().getLastname() }}</td>
+                                <td>{{ chiamata.getName() }}</td>
+                                <td>{{ chiamata.getEmail() }}</td>
+                                <td>{{ chiamata.getDateTime()|date('d/m/Y - H:i') }}</td>
+                                <td>{{ chiamata.getReply() }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <input type="text" placeholder="Cerca"/><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span></button>
                 <div id="showedContacts">
-                    Contatti visualizzati: 100
+                    Contatti visualizzati: {{ report|length }}
                 </div>
                 <button type="button" class="btn btn-default exportButton"><span class="glyphicon glyphicon-download-alt"></span> Esporta</button>
             </div>      
@@ -56,16 +64,15 @@
     <!-- Selettori filtri popover -->
     <div class="invisible" id="campaignFilter">
         <form>
+            <input type="checkbox" checked /><span> Apple</span><br/>
             <input type="checkbox" checked /><span> Asus</span><br/>
-            <input type="checkbox" checked /><span> Corsair</span><br/>
             <input type="checkbox" checked /><span> Dell</span><br/>
         </form>
     </div>
     <div class="invisible" id="operatorFilter">
         <form>
-            <input type="checkbox" checked /><span> operatore 1</span><br/>
-            <input type="checkbox" checked /><span> operatore 2</span><br/>
-            <input type="checkbox" checked /><span> operatore 3</span><br/>
+            <input type="checkbox" checked /><span> Alessandro Del Piero</span><br/>
+            <input type="checkbox" checked /><span> Federica Pellegrini</span><br/>
         </form>
     </div>
     <div class="invisible" id="replyFilter">
@@ -79,7 +86,6 @@
     {% endblock %}
     {% block javascript %}
     {{ parent() }}
-    <script type="text/javascript" src="js/calendario.js"></script>
-    <script type="text/javascript" src="js/filtri.js"></script>
-    <script type="text/javascript" src="js/faker.js"></script>
+    <script type="text/javascript" src="/bundles/js/calendario.js"></script>
+    <script type="text/javascript" src="/bundles/js/filtri.js"></script>
     {% endblock %}

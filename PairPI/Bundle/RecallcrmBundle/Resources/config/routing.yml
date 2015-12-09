@@ -1,0 +1,3 @@
+pair_pi_recallcrm_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PairPIRecallcrmBundle:Default:index }

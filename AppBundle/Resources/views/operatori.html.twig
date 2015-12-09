@@ -11,7 +11,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="operatori">
                             <div class="menuColSelect">
                                 <span class="glyphicon glyphicon-user"></span> Operatori
                             </div>
@@ -19,8 +19,6 @@
                     </li>
                 </ul>
             {% endblock %}
-                {% block logout %}
-                {% endblock %}
             {% block content %}
             </div>
             <div class="col-md-10 content">
@@ -41,48 +39,15 @@
                 <div class="tableOperatorAdminContainer">
                     <table class="table table-bordered tableOperatorAdmin table-hover">
                         <tbody>
+                            {% for operatore in operatori %}
                             <tr>
-                                <td>Attivo</td>
-                                <td>operatore 1</td>
-                                <td>operatore1@email.it</td>
-                                <td>88 / 167</td>
-                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                <td>{{ operatore.getStatus() }}</td>
+                                <td>{{ operatore.getFirstname() }} {{ operatore.getLastname() }}</td>
+                                <td>{{ operatore.getEmail() }}</td>
+                                <td>{{ operatore.getAssignedCalls() }}</td>
+                                <td><a role="button" class="btn btn-default btn-xs" href="modifica/{{ operatore.getId() }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                             </tr>
-                            <tr>
-                                <td>Attivo</td>
-                                <td>operatore 2</td>
-                                <td>operatore2@email.it</td>
-                                <td>115 / 167</td>
-                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            </tr>
-                            <tr>
-                                <td>Attivo</td>
-                                <td>operatore 3</td>
-                                <td>operatore3@email.it</td>
-                                <td>122 / 168</td>
-                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            </tr>
-                            <tr>
-                                <td>Inattivo</td>
-                                <td>operatore 4</td>
-                                <td>operatore4@email.it</td>
-                                <td>0 / 0</td>
-                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            </tr>
-                            <tr>
-                                <td>Inattivo</td>
-                                <td>operatore 5</td>
-                                <td>operatore5@email.it</td>
-                                <td>0 / 0</td>
-                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            </tr>
-                            <tr>
-                                <td>Inattivo</td>
-                                <td>operatore 6</td>
-                                <td>operatore6@email.it</td>
-                                <td>0 / 0</td>
-                                <td><a role="button" class="btn btn-default btn-xs" href="modifica"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            </tr>
+                            {% endfor %}
                             <tr>
                                 <td></td>
                                 <td></td>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css"  href="/bundles/css/style.css" />
     {% endblock %}
     <title>
-        {% block title %}RecallCRM {% endblock %} - RecallCRM
+        {% block title %}RecallCRM {% endblock %}
     </title>
 </head>
 <body>
@@ -19,13 +19,13 @@
             <div class="col-md-2 sidebar">
                 <h3 class="nameHead">RecallCRM</h3>
                 <div class="dateContainerSidebar">
-                    <h4>operatore 1</h4>
+                    <h4>{{ app.user.lastname }}</h4>
                     <h5 id="data"></h5>
                     <h5 id="ora"></h5>
                 </div>
             {% endblock %}
                 {% block logout %}
-                <a role="button" href="login" class="btn btn-default logout"><p>Logout</p><span class="glyphicon glyphicon-log-out"></span></a>
+                <a role="button" href="/logout" class="btn btn-default logout"><p>Logout</p><span class="glyphicon glyphicon-log-out"></span></a>
                 {% endblock %}
             {% block content %}
             {% endblock %}
