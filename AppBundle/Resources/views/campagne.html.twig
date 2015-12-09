@@ -35,9 +35,9 @@
                                     <span class="glyphicon glyphicon-th-list"></span>
                                 </a> {{ campagna.campaign }}
                             </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ campagna.chiamato }}</td>
+                            <td>{{ campagna.da_richiamare }}</td>
+                            <td>{{ campagna.non_chiamato }}</td>
                         </tr>
                         {% endfor %}
                     </table>

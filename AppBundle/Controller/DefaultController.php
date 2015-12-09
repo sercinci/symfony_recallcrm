@@ -33,6 +33,37 @@ class DefaultController extends Controller
             ->getQuery()
             ->getResult();
 
+        foreach ($campagne as $key => $value) {
+            $report = $repository->createQueryBuilder('r')
+                ->where('r.operator = :id')
+                ->setParameter('id', $usr->getid())
+                ->andWhere('r.campaign = :campaign')
+                ->setParameter('campaign', $value['campaign'])
+                ->getQuery()
+                ->getResult();
+            $nonChiamato = 0;
+            $daRichiamare = 0;
+            $chiamato = 0;
+            $value['non_chiamato'] = 0;
+            $value['da_richiamare'] = 0;
+            $value['chiamato'] = 0;
+
+            foreach ($report as $nkey => $reply) {
+                switch ($reply->getReply()) {
+                    case 'Non chiamato':
+                        $value['non_chiamato'] = ++$nonChiamato;
+                        break;
+                    case 'Da richiamare':
+                        $value['da_richiamare'] = ++$daRichiamare;
+                        break;
+                    default:
+                        $value['chiamato'] = ++$chiamato;
+                        break;
+                }
+            }
+            $campagne[$key] = $value;
+        }
+
         return $this->render('AppBundle::campagne.html.twig', array(
             'campagne' => $campagne,
             )
@@ -54,6 +85,8 @@ class DefaultController extends Controller
             ->setParameter('id', $usr->getid())
             ->andWhere('r.campaign = :campaign')
             ->setParameter('campaign', $campaign)
+            ->andWhere('r.comment != :comm')
+            ->setParameter('comm', 'hidden')
             ->orderBy('FIELD(r.reply, :r1, :r2, :r3, :r4)')
             ->setParameter(':r1', 'Da richiamare')
             ->setParameter(':r2', 'Non chiamato')
@@ -75,10 +108,36 @@ class DefaultController extends Controller
      */
     public function feedbackAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()
             ->getRepository('PairPI\Bundle\RecallcrmBundle\Entity\Report');
 
         $report = $repository->find($id);
+
+        if($report->getComment() == 'recall'){
+            $reply = $report->getReply();
+            $operator = $report->getOperator();
+            $campaign = $report->getCampaign();
+            $email = $report->getEmail();
+            $name = $report->getName();
+            $phone = $report->getPhone();
+            $date = $report->getDateTime();
+            $report->setComment('hidden');
+            
+            $em->persist($report);
+
+            $report = new Report;
+                        
+            $report
+                ->setReply($reply)
+                ->setOperator($operator)
+                ->setCampaign($campaign)
+                ->setName($name)
+                ->setEmail($email)
+                ->setPhone($phone)
+                ->setDateTime($date)
+                ->setComment('');
+        }
         
         $form = $this->createFormBuilder($report)
             ->add('comment', 'choice', [ 
@@ -119,7 +178,7 @@ class DefaultController extends Controller
         
         if($form->isSubmitted()) {
             $today = date_create_from_format('Y-m-d H:i', date('Y-m-d H:i')); 
-
+            
             $data = $form->getData();
             switch ($data->getComment()) {
                 case 'interessato':
@@ -130,7 +189,6 @@ class DefaultController extends Controller
                 case 'altro_positivo':
                     $report
                         ->setReply('Positivo')
-                        ->setPositiveComment($data->getPositiveComment())
                         ->setDateTime($today);
                     break;
                 case 'non_interessato':
@@ -146,37 +204,15 @@ class DefaultController extends Controller
                 case 'altro_negativo':
                     $report
                         ->setReply('Negativo')
-                        ->setNegativeComment($data->getNegativeComment())
                         ->setDateTime($today);
                     break;
                 case 'richiamare':
                     $report->setReply('Da richiamare');
-                    if ($report->getComment() == 'richiamare') {
-                        $newReport = new Report;
-                    
-                        $newReport
-                            ->setReply($report->getReply())
-                            ->setOperator($report->getOperator())
-                            ->setCampaign($report->getCampaign())
-                            ->setName($report->getName())
-                            ->setEmail($report->getEmail())
-                            ->setPhone($report->getPhone())
-                            ->setDateTime($data->getDateTime());
-                    } else {
-                        $report->setDateTime($data->getDateTime());
-                    }
+                    $report->setComment('recall');
                     break;
             }
             
-            $report
-                ->setComment($data->getComment())
-                ->setNote($data->getNote());
-
-            $em = $this->getDoctrine()->getManager();
             $em->persist($report);
-            if(isset($newReport)){
-                $em->persist($newReport);
-            }
             $em->flush();
             
             return $this->redirect('/contatti/'.$report->getCampaign());
@@ -279,19 +315,7 @@ class DefaultController extends Controller
                 
                 return $this->redirectToRoute('operatori');
             }
-            $data = $form->getData();
             
-            $operatore
-                ->setEmail($data->getEmail())
-                ->setFirstname($data->getFirstname())
-                ->setLastname($data->getLastname())
-                ->setStatus($data->getStatus());
-            
-            if ($data->getPlainPassword() != NULL) {
-                $operatore
-                    ->setPlainPassword($data->getPlainPassword());
-            }
-
             $userManager->updateUser($operatore);
 
             return $this->redirectToRoute('operatori');
@@ -346,11 +370,6 @@ class DefaultController extends Controller
 
             $operatore
                 ->setUsername($data->getFirstname() . $data->getLastname())
-                ->setEmail($data->getEmail())
-                ->setFirstname($data->getFirstname())
-                ->setPlainPassword($data->getPlainPassword())
-                ->setLastname($data->getLastname())
-                ->setStatus($data->getStatus())
                 ->setAssignedCalls()
                 ->addRole('ROLE_OPERATORE')
                 ->setEnabled(true);
