@@ -54,7 +54,6 @@ class DefaultController extends Controller
             ->setParameter('id', $usr->getid())
             ->andWhere('r.campaign = :campaign')
             ->setParameter('campaign', $campaign)
-            //->orderBy('r.reply')
             ->orderBy('FIELD(r.reply, :r1, :r2, :r3, :r4)')
             ->setParameter(':r1', 'Da richiamare')
             ->setParameter(':r2', 'Non chiamato')
